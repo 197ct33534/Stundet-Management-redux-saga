@@ -1,28 +1,22 @@
+import { Header, SideBar } from 'components/common';
 import React from 'react';
+import { Outlet } from 'react-router-dom';
+import './admin.scss';
 
 export const AdminLayout = () => {
     console.log('AdminLayout didmount');
 
     return (
-        <div
-            style={{
-                display: 'grid',
-                gridTemplateRows: 'auto 1fr',
-                gridTemplateColumns: '300px 1fr',
-                gridTemplateAreas: `"header header" "sidebar main"`,
-                minHeight: '100vh',
-            }}
-        >
-            <div style={{ gridArea: 'header', borderBottom: `1px solid black` }}>header</div>
-            <div
-                style={{
-                    gridArea: 'sidebar',
-                    borderLeft: `1px solid black`,
-                }}
-            >
-                slibar
+        <div className="root">
+            <div className="header">
+                <Header />
             </div>
-            <div style={{ gridArea: 'main' }}>main</div>
+            <div className="sidebar">
+                <SideBar />
+            </div>
+            <div className="main">
+                <Outlet />
+            </div>
         </div>
     );
 };

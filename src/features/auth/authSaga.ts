@@ -14,7 +14,7 @@ function* handleLogin(payload: LoggingPayload) {
                 name: '197ct33534',
             })
         );
-        history.push('/admin');
+        history.push('/admin/dashboard');
     } catch (error) {
         yield put(loginFailed('login thất bại'));
     }

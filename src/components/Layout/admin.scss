@@ -1,0 +1,19 @@
+.root {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 240px 1fr;
+    grid-template-areas: 'header1 header1' 'sidebar main';
+    min-height: 100vh;
+    .header {
+        grid-area: header1;
+        border-bottom: 1px solid black;
+    }
+    .main {
+        grid-area: main;
+        padding: 16px 24px;
+    }
+    .sidebar {
+        grid-area: sidebar;
+        border-right: 1px solid black;
+    }
+}
