@@ -11,11 +11,11 @@ const initialState: studentState = {
     loadding: false,
     list: [],
     pagination: {
-        _limit: 15,
+        _limit: 8,
         _page: 1,
-        _totalRows: 15,
+        _totalRows: 8,
     },
-    filter: { _page: 1, _limit: 15 },
+    filter: { _page: 1, _limit: 8 },
 };
 const studentSlice = createSlice({
     name: 'student',

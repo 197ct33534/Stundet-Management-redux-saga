@@ -1,18 +1,38 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, LinearProgress, Pagination, Typography } from '@mui/material';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import React from 'react';
 import StudentTable from '../components/StudentTable';
-import { selectStudentList, studentActions } from '../studentSlice';
+import {
+    selectStudentFilter,
+    selectStudentList,
+    selectStudentLoading,
+    selectStudentPagination,
+    studentActions,
+} from '../studentSlice';
 
 const ListPage = () => {
     const studentList = useAppSelector(selectStudentList);
+    const studentPagination = useAppSelector(selectStudentPagination);
+    const studentFilter = useAppSelector(selectStudentFilter);
+    const loading = useAppSelector(selectStudentLoading);
+
     const dispatch = useAppDispatch();
     React.useEffect(() => {
-        dispatch(studentActions.fetchStudentList({ _page: 1, _limit: 10 }));
-        console.log('student feature');
-    }, [dispatch]);
+        dispatch(studentActions.fetchStudentList(studentFilter));
+    }, [dispatch, studentFilter]);
+    const handlePageChange = (e: React.ChangeEvent<unknown>, page: number) => {
+        dispatch(
+            studentActions.setFilter({
+                ...studentFilter,
+                _page: page,
+            })
+        );
+    };
     return (
-        <Box>
+        <Box sx={{ position: 'relative', paddingTop: '12px' }}>
+            {loading && (
+                <LinearProgress sx={{ position: 'absolute', top: '-12px', width: '100%' }} />
+            )}
             <Box
                 sx={{
                     display: 'flex',
@@ -29,6 +49,14 @@ const ListPage = () => {
             {/* student table */}
             <StudentTable studentList={studentList} />
             {/* pagition */}
+            <Box sx={{ display: 'flex', justifyContent: 'center', margin: '16px 0px' }}>
+                <Pagination
+                    page={studentPagination._page}
+                    count={Math.ceil(studentPagination._totalRows / studentPagination._limit)}
+                    color="secondary"
+                    onChange={handlePageChange}
+                />
+            </Box>
         </Box>
     );
 };
