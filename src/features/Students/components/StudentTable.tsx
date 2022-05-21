@@ -9,17 +9,25 @@ import {
     TableHead,
     TableRow,
 } from '@mui/material';
-import { Student } from 'models';
+import { Student, City } from 'models';
 import * as React from 'react';
 import { capitalizeString, getMarkColor } from 'utils';
 
 export interface StudentTableProps {
     studentList: Student[];
+    cityMap: {
+        [key: string]: City;
+    };
     onEdit?: (student: Student) => void;
     onRemove?: (student: Student) => void;
 }
 
-export default function StudentTable({ studentList, onRemove, onEdit }: StudentTableProps) {
+export default function StudentTable({
+    studentList,
+    onRemove,
+    onEdit,
+    cityMap,
+}: StudentTableProps) {
     return (
         <TableContainer component={Paper}>
             <Table size="small" aria-label="simple table">
@@ -49,7 +57,7 @@ export default function StudentTable({ studentList, onRemove, onEdit }: StudentT
                                     {student.mark}
                                 </Box>
                             </TableCell>
-                            <TableCell>{student.city}</TableCell>
+                            <TableCell>{cityMap[student.city]?.name}</TableCell>
 
                             <TableCell align="right">
                                 <Box>

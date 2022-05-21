@@ -1,5 +1,6 @@
 import { Box, Button, LinearProgress, Pagination, Typography } from '@mui/material';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { cityMap } from 'features/city/citySlice';
 import React from 'react';
 import StudentTable from '../components/StudentTable';
 import {
@@ -15,7 +16,7 @@ const ListPage = () => {
     const studentPagination = useAppSelector(selectStudentPagination);
     const studentFilter = useAppSelector(selectStudentFilter);
     const loading = useAppSelector(selectStudentLoading);
-
+    const selectCityMap = useAppSelector(cityMap);
     const dispatch = useAppDispatch();
     React.useEffect(() => {
         dispatch(studentActions.fetchStudentList(studentFilter));
@@ -47,7 +48,7 @@ const ListPage = () => {
                 <Button variant="contained">Add new student</Button>
             </Box>
             {/* student table */}
-            <StudentTable studentList={studentList} />
+            <StudentTable studentList={studentList} cityMap={selectCityMap} />
             {/* pagition */}
             <Box sx={{ display: 'flex', justifyContent: 'center', margin: '16px 0px' }}>
                 <Pagination

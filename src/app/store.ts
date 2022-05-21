@@ -4,12 +4,14 @@ import authReducer from 'features/auth/authSlice';
 import rootSaga from './rootSaga';
 import dashboardReducer from 'features/Dashboard/DashboardSlice';
 import studentRedcer from 'features/Students/studentSlice';
+import cityReducer from 'features/city/citySlice';
 
 const sagaMiddleware = createSagaMiddleware();
 const rootReducer = combineReducers({
     auth: authReducer,
     dashboard: dashboardReducer,
     student: studentRedcer,
+    city: cityReducer,
 });
 export const store = configureStore({
     reducer: rootReducer,
