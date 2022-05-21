@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { Student } from 'models';
 import * as React from 'react';
+import { capitalizeString, getMarkColor } from 'utils';
 
 export interface StudentTableProps {
     studentList: Student[];
@@ -42,8 +43,12 @@ export default function StudentTable({ studentList, onRemove, onEdit }: StudentT
                                 {student.id}
                             </TableCell>
                             <TableCell>{student.name}</TableCell>
-                            <TableCell>{student.gender}</TableCell>
-                            <TableCell>{student.mark}</TableCell>
+                            <TableCell>{capitalizeString(student.gender)}</TableCell>
+                            <TableCell>
+                                <Box color={getMarkColor(student.mark)} fontWeight="bold">
+                                    {student.mark}
+                                </Box>
+                            </TableCell>
                             <TableCell>{student.city}</TableCell>
 
                             <TableCell align="right">
