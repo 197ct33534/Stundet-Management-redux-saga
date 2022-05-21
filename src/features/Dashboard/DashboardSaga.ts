@@ -59,6 +59,7 @@ function* fetchRankingByCityList() {
     //create rabking by city from list response and citiList
     const rankingByCity: Array<RankingByCity> = ListResponse.map((x, idx) => ({
         cityId: cityList[idx].code,
+        cityName: cityList[idx].name,
         rankingByCity: x.data,
     }));
     // update state

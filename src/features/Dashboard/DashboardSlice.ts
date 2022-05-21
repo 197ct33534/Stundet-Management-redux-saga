@@ -9,6 +9,7 @@ export interface DashboardStatistics {
 }
 export interface RankingByCity {
     cityId: string;
+    cityName: string;
     rankingByCity: Student[];
 }
 export interface DashboardState {

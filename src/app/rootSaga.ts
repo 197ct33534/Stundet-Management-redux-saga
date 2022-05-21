@@ -1,8 +1,8 @@
 import authSaga from 'features/auth/authSaga';
 import dashboardSaga from 'features/Dashboard/DashboardSaga';
+import studentSaga from 'features/Students/studentSaga';
 import { all } from 'redux-saga/effects';
 
 export default function* rootSaga() {
-    console.log('root saga');
-    yield all([authSaga(), dashboardSaga()]);
+    yield all([authSaga(), dashboardSaga(), studentSaga()]);
 }
