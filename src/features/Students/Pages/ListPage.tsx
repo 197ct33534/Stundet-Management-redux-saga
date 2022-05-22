@@ -1,7 +1,8 @@
 import { Box, Button, LinearProgress, Pagination, Typography } from '@mui/material';
+import studentApi from 'api/studentApi';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { cityMap, selectCityList } from 'features/city/citySlice';
-import { ListParams } from 'models';
+import { ListParams, Student } from 'models';
 import React from 'react';
 import StudentFilters from '../components/StudentFilters';
 import StudentTable from '../components/StudentTable';
@@ -39,6 +40,15 @@ const ListPage = () => {
     const onFilterChange = (newFilter: ListParams) => {
         dispatch(studentActions.setFilter(newFilter));
     };
+    const hadnleRemoveStudent = async (student: Student) => {
+        try {
+            await studentApi.remove(student.id as string);
+            const clondeFilter = { ...studentFilter };
+            dispatch(studentActions.setFilter(clondeFilter));
+        } catch (error) {
+            console.log('erorr remove student ' + error);
+        }
+    };
     return (
         <Box sx={{ position: 'relative', paddingTop: '12px' }}>
             {loading && (
@@ -66,7 +76,11 @@ const ListPage = () => {
                 />
             </Box>
             {/* student table */}
-            <StudentTable studentList={studentList} cityMap={selectCityMap} />
+            <StudentTable
+                studentList={studentList}
+                cityMap={selectCityMap}
+                onRemove={hadnleRemoveStudent}
+            />
             {/* pagition */}
             <Box sx={{ display: 'flex', justifyContent: 'center', margin: '16px 0px' }}>
                 <Pagination
