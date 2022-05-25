@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { cityMap, selectCityList } from 'features/city/citySlice';
 import { ListParams, Student } from 'models';
 import React from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import StudentFilters from '../components/StudentFilters';
 import StudentTable from '../components/StudentTable';
 import {
@@ -15,6 +16,8 @@ import {
 } from '../studentSlice';
 
 const ListPage = () => {
+    const { pathname } = useLocation();
+    const navigate = useNavigate();
     const studentList = useAppSelector(selectStudentList);
     const studentPagination = useAppSelector(selectStudentPagination);
     const studentFilter = useAppSelector(selectStudentFilter);
@@ -49,6 +52,9 @@ const ListPage = () => {
             console.log('erorr remove student ' + error);
         }
     };
+    const handleEditStudent = async (student: Student) => {
+        navigate(`${pathname}/${student.id}`);
+    };
     return (
         <Box sx={{ position: 'relative', paddingTop: '12px' }}>
             {loading && (
@@ -65,7 +71,9 @@ const ListPage = () => {
                 }}
             >
                 <Typography variant="h4"> Student</Typography>
-                <Button variant="contained">Add new student</Button>
+                <Link to={`${pathname}/add`} style={{ textDecoration: 'none' }}>
+                    <Button variant="contained">Add new student</Button>
+                </Link>
             </Box>
             <Box mb={3}>
                 <StudentFilters
@@ -80,6 +88,7 @@ const ListPage = () => {
                 studentList={studentList}
                 cityMap={selectCityMap}
                 onRemove={hadnleRemoveStudent}
+                onEdit={handleEditStudent}
             />
             {/* pagition */}
             <Box sx={{ display: 'flex', justifyContent: 'center', margin: '16px 0px' }}>
