@@ -8,7 +8,6 @@ export interface StudentFeatureProps {}
 export function StudentFeature(props: StudentFeatureProps) {
     const dispatch = useAppDispatch();
     React.useEffect(() => {
-        console.log('student feature');
         dispatch(cityActions.fetchCityList());
     }, [dispatch]);
     return <Outlet />;

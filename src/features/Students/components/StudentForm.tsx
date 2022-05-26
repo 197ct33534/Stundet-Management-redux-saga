@@ -8,6 +8,7 @@ import { selectCityOtions } from 'features/city/citySlice';
 import { Student } from 'models';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import * as yup from 'yup';
 export interface IStudentFormProps {
     initialValues?: Student;
@@ -59,6 +60,7 @@ export default function StudentForm({ initialValues, onSubmit }: IStudentFormPro
         try {
             setErorr('');
             await onSubmit?.(formValues);
+            toast.success('submit thành công');
         } catch (error) {
             setErorr('lỗi form update or add');
         }

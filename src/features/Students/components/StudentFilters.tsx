@@ -58,8 +58,6 @@ export default function StudentFilters({
         };
         onChange(newFilter);
         if (searchRef.current) {
-            console.log(searchRef.current.value);
-
             searchRef.current.value = '';
         }
     };

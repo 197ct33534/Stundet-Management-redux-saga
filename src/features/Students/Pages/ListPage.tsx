@@ -5,6 +5,7 @@ import { cityMap, selectCityList } from 'features/city/citySlice';
 import { ListParams, Student } from 'models';
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import StudentFilters from '../components/StudentFilters';
 import StudentTable from '../components/StudentTable';
 import {
@@ -48,8 +49,18 @@ const ListPage = () => {
             await studentApi.remove(student.id as string);
             const clondeFilter = { ...studentFilter };
             dispatch(studentActions.setFilter(clondeFilter));
+
+            toast.success('xóa thành công');
         } catch (error) {
-            console.log('erorr remove student ' + error);
+            toast.error('Lỗi không thể xóa được', {
+                position: 'top-right',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
         }
     };
     const handleEditStudent = async (student: Student) => {

@@ -4,8 +4,6 @@ import { Outlet } from 'react-router-dom';
 import './admin.scss';
 
 export const AdminLayout = () => {
-    console.log('AdminLayout didmount');
-
     return (
         <div className="root">
             <div className="header">

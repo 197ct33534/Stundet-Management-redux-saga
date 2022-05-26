@@ -40,7 +40,7 @@ export default function AddEditPage(props: AddEditPageProps) {
         } else {
             await studentApi.add(data);
         }
-        throw 'lõi rồi nè';
+
         navigate('/admin/students');
     };
     return (
