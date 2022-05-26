@@ -25,7 +25,7 @@ function App() {
                         </Route>
                     </Route>
                 </Route>
-
+                <Route path="/" element={<Navigate replace to="admin" />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </>

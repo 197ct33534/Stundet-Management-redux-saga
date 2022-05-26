@@ -3,7 +3,7 @@ import { Box, Typography } from '@mui/material';
 import studentApi from 'api/studentApi';
 import { Student } from 'models';
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import StudentForm from '../components/StudentForm';
 
 export interface AddEditPageProps {}
@@ -12,6 +12,7 @@ export default function AddEditPage(props: AddEditPageProps) {
     const { studentID } = useParams();
     const [student, setStudent] = useState<Student>();
     const isEdit = Boolean(studentID);
+    const navigate = useNavigate();
     useEffect(() => {
         if (!studentID) {
             return;
@@ -33,7 +34,15 @@ export default function AddEditPage(props: AddEditPageProps) {
         gender: 'male',
         ...student,
     } as Student;
-    const handleStudentFormSubmit = (data: Student) => {};
+    const handleStudentFormSubmit = async (data: Student) => {
+        if (isEdit) {
+            await studentApi.update(data);
+        } else {
+            await studentApi.add(data);
+        }
+        throw 'lõi rồi nè';
+        navigate('/admin/students');
+    };
     return (
         <Box>
             <Link to="/admin/students" style={{ textDecoration: 'none' }}>

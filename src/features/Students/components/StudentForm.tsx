@@ -1,10 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button } from '@mui/material';
+import Alert from '@mui/material/Alert';
+import CircularProgress from '@mui/material/CircularProgress';
 import { useAppSelector } from 'app/hooks';
 import { InputField, RadioGroupField, SelectField } from 'components/FormField';
 import { selectCityOtions } from 'features/city/citySlice';
 import { Student } from 'models';
-import * as React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 export interface IStudentFormProps {
@@ -44,12 +46,22 @@ const schema = yup
     .required();
 
 export default function StudentForm({ initialValues, onSubmit }: IStudentFormProps) {
-    const { control, handleSubmit } = useForm<Student>({
+    const {
+        control,
+        handleSubmit,
+        formState: { isSubmitting },
+    } = useForm<Student>({
         defaultValues: initialValues,
         resolver: yupResolver(schema),
     });
-    const handleFormSubmit = (formValues: Student) => {
-        console.log('submit ', formValues);
+    const [error, setErorr] = useState<string>('');
+    const handleFormSubmit = async (formValues: Student) => {
+        try {
+            setErorr('');
+            await onSubmit?.(formValues);
+        } catch (error) {
+            setErorr('lỗi form update or add');
+        }
     };
     const cityOptions = useAppSelector(selectCityOtions);
     return (
@@ -68,16 +80,19 @@ export default function StudentForm({ initialValues, onSubmit }: IStudentFormPro
                 />
                 <InputField control={control} label="điểm" name="mark" type="number" />
                 <InputField control={control} label="tuổi" name="age" type="number" />
+                {Array.isArray(cityOptions) && cityOptions.length > 0 && (
+                    <SelectField
+                        control={control}
+                        label="thành phố"
+                        name="city"
+                        options={cityOptions}
+                    />
+                )}
 
-                <SelectField
-                    control={control}
-                    label="thành phố"
-                    name="city"
-                    options={cityOptions}
-                />
+                {error && <Alert severity="error">{error}</Alert>}
                 <Box mt={3}>
-                    <Button variant="contained" type="submit">
-                        save
+                    <Button variant="contained" type="submit" disabled={isSubmitting}>
+                        {isSubmitting && <CircularProgress color="success" size={16} />} &nbsp;save
                     </Button>
                 </Box>
             </form>
